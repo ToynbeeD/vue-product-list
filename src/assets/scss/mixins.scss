@@ -1,0 +1,23 @@
+@mixin fontOptions($fz, $lh) {
+    font-size: $fz;
+    line-height: $lh;
+}
+
+@mixin flex($alignItems) {
+    display: flex;
+    align-items: $alignItems;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin transition($property) {
+    transition: $property .2s linear;
+}
