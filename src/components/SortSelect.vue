@@ -34,18 +34,38 @@ export default {
 .wrapper {
   position: relative;
 
+  &:hover {
+    .select {
+      color: $textColor
+    }
+
+    svg {
+      stroke: $textColor;
+    }
+  }
+
   .select {
     @include fontOptions(12px, 100%);
+    @include transition(color);
     padding: 10px 16px;
     padding-right: 20px;
     height: 36px;
     color: $grey;
     border-radius: 4px;
     box-shadow: $shadowSmall;
+
+    &:focus {
+      color: $textColor
+    }
+
+    &:focus ~ svg {
+      stroke: $textColor;
+    }
   }
 
   svg {
     @include size(8px, 6px);
+    @include transition(stroke);
     position: absolute;
     right: 10px;
     top: calc(50% - 3px);

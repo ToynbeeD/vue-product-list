@@ -82,7 +82,6 @@ export default {
   @include flexColumn;
   position: relative;
   padding: 24px;
-  margin-right: 16px;
   width: 332px;
   background-color: $background;
   box-shadow: $shadowLarge;
@@ -111,8 +110,10 @@ export default {
 
     &-input {
       @include fontOptions(12px, 15px);
+      @include transition(border-color);
       padding: 10px 16px;
       height: 36px;
+      border: 1px solid transparent;
       border-radius: 4px;
       background-color: $background;
       box-shadow: $shadowSmall;
@@ -120,6 +121,14 @@ export default {
       &.large {
         height: 108px;
         resize: none;
+      }
+
+      &:hover:not(:focus) {
+        border-color: $grey;
+      }
+
+      &:focus {
+        border-color: $textColor;
       }
     }
   }
@@ -134,16 +143,35 @@ export default {
 
   &__submit {
     @include fontOptions(12px, 15px);
+    @include transition(background-color);
     margin-top: 24px;
     padding: 10px 20px;
     background-color: $successColor;
     border-radius: 10px;
     color: $white;
 
+    &:hover {
+      background-color: darken($successColor, 20%);
+    }
+
+    &:active {
+      background-color: darken($successColor, 30%);
+    }
+
+    &:focus-within:not(:active) {
+      background-color: darken($successColor, 10%);
+    }
+
     &:disabled {
       background-color: $grey;
       cursor: default;
     }
+  }
+}
+
+@media (max-width: 499px) {
+  .form {
+    width: 100%;
   }
 }
 </style>

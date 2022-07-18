@@ -9,7 +9,7 @@
     <main class="main">
       <div class="main__container container">
         <aside>
-          <ProductForm @addProduct="addProductToList" />
+          <ProductForm class="main__form" @addProduct="addProductToList" />
         </aside>
         <ProductList @deleteProduct="deleteProduct" :products-list="productsList" />
       </div>
@@ -160,6 +160,38 @@ textarea {
 .main {
   &__container {
     @include flex(flex-start);
+  }
+
+  &__form {
+    margin-right: 16px;
+  }
+}
+
+@media (max-width: 899px) {
+  .main {
+    &__container {
+      flex-direction: column;
+    }
+    &__form {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media (max-width: 499px) {
+  .header__container {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .header__sort {
+    margin-top: 15px;
+    margin-left: 0;
+  }
+
+  aside {
+    width: 100%;
   }
 }
 </style>

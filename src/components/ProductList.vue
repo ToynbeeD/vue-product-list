@@ -42,4 +42,30 @@ export default {
     }
   }
 }
+
+@media (max-width: 1439px) {
+  .list__item {
+    margin-bottom: 16px;
+    flex: 1 1 calc(50% - 16px);
+
+    &:not(:nth-child(3n)) {
+      margin-right: 0;
+    }
+
+    &:not(:nth-child(even)) {
+      margin-right: 16px;
+    }
+  }
+}
+
+@media (max-width: 499px) {
+  .list__item {
+    margin-bottom: 10px;
+    flex: 1 1 100%;
+
+    &:not(:nth-child(even)) {
+      margin-right: 0;
+    }
+  }
+}
 </style>

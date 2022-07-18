@@ -42,14 +42,18 @@ export default {
 @import '@/assets/scss/mixins.scss';
 
 .item {
+  @include transition(transform);
   position: relative;
   border-radius: 4px;
   box-shadow: $shadowSmall;
 
+  &:hover {
+    transform: translateY(-5px);
+  }
+
   &__delete {
     @include flex(center);
     @include size(32px, 32px);
-    @include transition(opacity);
     position: absolute;
     right: -8px;
     top: -8px;
@@ -58,6 +62,13 @@ export default {
     border-radius: 10px;
     cursor: pointer;
     opacity: 0;
+    transition-property: opacity background-color;
+    transition-duration: .2s;
+    transition-timing-function: linear;
+
+    &:hover {
+      background-color: darken($deleteColor, 10%);
+    }
 
     svg {
       @include size(16px, 16px);
