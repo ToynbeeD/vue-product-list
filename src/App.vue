@@ -11,7 +11,8 @@
         <aside>
           <ProductForm class="main__form" @addProduct="addProductToList" />
         </aside>
-        <ProductList @deleteProduct="deleteProduct" :products-list="productsList" />
+        <MySpinner v-if="isListLoading" />
+        <ProductList v-else @deleteProduct="deleteProduct" :products-list="productsList" />
       </div>
     </main>
   </div>
@@ -21,15 +22,29 @@
 import ProductList from '@/components/ProductList.vue'
 import ProductForm from '@/components/ProductForm.vue'
 import SortSelect from '@/components/SortSelect.vue'
+import MySpinner from '@/components/MySpinner.vue'
 
 export default {
-  components: { ProductList, ProductForm, SortSelect },
+  components: {
+    ProductList,
+    ProductForm,
+    SortSelect,
+    MySpinner
+  },
   data () {
     return {
-      productsList: []
+      productsList: [],
+      isListLoading: false
     }
   },
   methods: {
+    productsLoading () {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve()
+        }, 2000)
+      })
+    },
     createProductList () {
       if (localStorage.products) {
         this.productsList = JSON.parse(localStorage.products)
@@ -84,7 +99,10 @@ export default {
       }
     }
   },
-  created () {
+  async created () {
+    this.isListLoading = true
+    await this.productsLoading()
+    this.isListLoading = false
     this.createProductList()
   }
 }

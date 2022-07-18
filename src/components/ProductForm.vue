@@ -37,6 +37,7 @@
       />
     </label>
     <button class="form__submit btn-reset" type="submit" :disabled="!isFormFilled"> Добавить товар </button>
+    <span v-if="succesAdded" class="form__success">Товар успешно добавлен!</span>
   </form>
 </template>
 
@@ -45,7 +46,7 @@ export default {
   data () {
     return {
       product: {},
-      hasError: false
+      succesAdded: false
     }
   },
   computed: {
@@ -64,10 +65,12 @@ export default {
   },
   methods: {
     addProduct () {
+      this.succesAdded = false
       this.product.id = Date.now()
       this.product.name = this.product.name.toLowerCase()
       this.product.price = Number(this.product.price.replace(/\s/g, ''))
       this.$emit('addProduct', this.product)
+      this.succesAdded = true
       this.product = {}
     }
   }
@@ -133,12 +136,12 @@ export default {
     }
   }
 
-  &__error {
+  &__success {
     @include fontOptions(12px, 15px);
     position: absolute;
     bottom: 5px;
     left: 24px;
-    color: $deleteColor
+    color: $successColor
   }
 
   &__submit {

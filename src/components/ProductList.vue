@@ -1,5 +1,5 @@
 <template>
-  <ul class="list">
+  <transition-group name="list" class="list" tag="ul">
     <ProductItem
       class="list__item"
       v-for="product in productsList"
@@ -7,7 +7,7 @@
       :product="product"
       @deleteProduct="deleteProduct"
     />
-  </ul>
+  </transition-group>
 </template>
 
 <script>
@@ -40,6 +40,16 @@ export default {
     &:not(:nth-child(3n)) {
       margin-right: 16px;
     }
+  }
+
+  &-enter-active,
+  &-leave-active {
+    transition: all 1s ease;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
   }
 }
 
