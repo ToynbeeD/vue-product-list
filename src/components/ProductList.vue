@@ -1,6 +1,12 @@
 <template>
   <ul class="list">
-    <ProductItem class="list__item" v-for="product in productAmount" :key="product" />
+    <ProductItem
+      class="list__item"
+      v-for="product in productsList"
+      :key="product.id"
+      :product="product"
+      @deleteProduct="deleteProduct"
+    />
   </ul>
 </template>
 
@@ -9,7 +15,12 @@ import ProductItem from '@/components/ProductItem.vue'
 export default {
   components: { ProductItem },
   props: {
-    productAmount: Number
+    productsList: Array
+  },
+  methods: {
+    deleteProduct (product) {
+      this.$emit('deleteProduct', product)
+    }
   }
 }
 </script>
@@ -19,7 +30,7 @@ export default {
 @import '@/assets/scss/mixins.scss';
 
 .list {
-  @include flex(flex-start);
+  display: flex;
   flex-wrap: wrap;
 
   &__item {

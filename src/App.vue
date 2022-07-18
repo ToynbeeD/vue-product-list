@@ -3,15 +3,15 @@
     <header class="header">
       <div class="header__container container">
         <h1 class="header__heading">Добавление товара</h1>
-        <SortSelect class="header__sort" />
+        <SortSelect @sort="doSortList" class="header__sort" />
       </div>
     </header>
     <main class="main">
       <div class="main__container container">
         <aside>
-          <ProductForm />
+          <ProductForm @addProduct="addProductToList" />
         </aside>
-        <ProductList :product-amount="productAmount" />
+        <ProductList @deleteProduct="deleteProduct" :products-list="productsList" />
       </div>
     </main>
   </div>
@@ -26,8 +26,66 @@ export default {
   components: { ProductList, ProductForm, SortSelect },
   data () {
     return {
-      productAmount: 18
+      productsList: []
     }
+  },
+  methods: {
+    createProductList () {
+      if (localStorage.products) {
+        this.productsList = JSON.parse(localStorage.products)
+      } else {
+        for (let i = 0; i < 12; i++) {
+          const product = {
+            id: Date.now() + i,
+            name: 'название товара',
+            price: 10000,
+            imageSrc: require('@/assets/img/product.jpg'),
+            description: 'Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в несколько строк'
+          }
+          this.productsList.push(product)
+        }
+      }
+    },
+    addProductToList (product) {
+      this.productsList = [product, ...this.productsList]
+      localStorage.setItem('products', JSON.stringify(this.productsList))
+    },
+    deleteProduct (product) {
+      this.productsList = this.productsList.filter(item => item.id !== product.id)
+      localStorage.setItem('products', JSON.stringify(this.productsList))
+    },
+    sortingList (key, direction = true) {
+      this.productsList = this.productsList.sort((curr, next) => {
+        if (curr[key] > next[key]) {
+          return direction ? 1 : -1
+        }
+        if (curr[key] < next[key]) {
+          return direction ? -1 : 1
+        }
+        return 0
+      })
+    },
+    doSortList (sortKey) {
+      switch (sortKey) {
+        case 'price-up':
+          this.sortingList('price')
+          break
+
+        case 'price-down':
+          this.sortingList('price', false)
+          break
+
+        case 'name':
+          this.sortingList('name')
+          break
+
+        default:
+          this.sortingList('id', false)
+      }
+    }
+  },
+  created () {
+    this.createProductList()
   }
 }
 </script>

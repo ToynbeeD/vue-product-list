@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <select class="select">
+    <select @change="doSort" class="select" v-model="sortKey">
       <option value="" selected>По умолчанию</option>
-      <option value="1">По возрастанию цены</option>
-      <option value="2">По убыванию цены</option>
-      <option value="3">По наименованию</option>
+      <option value="price-up">По возрастанию цены</option>
+      <option value="price-down">По убыванию цены</option>
+      <option value="name">По наименованию</option>
     </select>
     <svg>
       <use xlink:href="@/assets/img/icons.svg#arrow-down"></use>
@@ -14,7 +14,16 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      sortKey: ''
+    }
+  },
+  methods: {
+    doSort () {
+      this.$emit('sort', this.sortKey)
+    }
+  }
 }
 </script>
 

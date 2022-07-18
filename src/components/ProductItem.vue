@@ -1,22 +1,41 @@
 <template>
   <li class="item">
-    <button class="item__delete">
+    <button class="item__delete" @click="deleteProduct">
       <svg>
         <use xlink:href="@/assets/img/icons.svg#delete"></use>
       </svg>
     </button>
     <div class="item__image">
-      <img class="item__image-content" src="@/assets/img/product.jpg" alt="Наименование товара">
+      <img class="item__image-content" :src="product.imageSrc" :alt="capitalizeProductName">
     </div>
     <div class="item__content">
-      <h2 class="item__content-heading">Наименование товара</h2>
-      <p class="item__content-description">
-        Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в несколько строк
-      </p>
-      <span class="item__content-price">10 000 руб.</span>
+      <h2 class="item__content-heading"> {{ capitalizeProductName }} </h2>
+      <p class="item__content-description"> {{ product.description }} </p>
+      <span class="item__content-price"> {{ formatPrice }} руб. </span>
     </div>
   </li>
 </template>
+
+<script>
+export default {
+  props: {
+    product: Object
+  },
+  methods: {
+    deleteProduct () {
+      this.$emit('deleteProduct', this.product)
+    }
+  },
+  computed: {
+    formatPrice () {
+      return new Intl.NumberFormat().format(this.product.price)
+    },
+    capitalizeProductName () {
+      return this.product.name[0].toUpperCase() + this.product.name.slice(1)
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 @import '@/assets/scss/variables.scss';
@@ -64,6 +83,7 @@
 
   &__content {
     @include flex(flex-start);
+    height: calc(100% - 200px);
     flex-direction: column;
     padding: 16px;
     padding-bottom: 24px;
