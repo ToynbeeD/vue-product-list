@@ -1,5 +1,7 @@
 # vue-product-list
 
+npm version 8.1.2
+
 ## Project setup
 ```
 npm install
